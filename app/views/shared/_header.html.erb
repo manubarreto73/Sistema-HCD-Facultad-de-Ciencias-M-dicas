@@ -4,11 +4,10 @@
       <%= link_to "MiApp", root_path, class: "hover:text-gray-300 transition" %>
     </div>
     <nav class="space-x-4">
+      <%= link_to 'Destinos', destinations_path, class: "hover:text-gray-300" %>
+      <%= link_to 'Temas', subjects_path, class: "hover:text-gray-300" %>
       <%= link_to "Inicio", root_path, class: "hover:text-gray-300" %>
-      
-      <%= link_to "Cerrar sesión", destroy_user_session_path, 
-          data: { turbo_method: :delete }, 
-          class: "hover:text-red-400" %>
+      <%= link_to "Cerrar sesión", destroy_user_session_path, data: { turbo_method: :delete }, class: "hover:text-red-400" %>
     </nav>
   </div>
 </header>

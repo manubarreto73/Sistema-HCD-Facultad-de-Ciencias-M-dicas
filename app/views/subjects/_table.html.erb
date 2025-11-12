@@ -1,0 +1,21 @@
+<table class="w-full text-left border-collapse">
+  <thead>
+    <tr class="bg-gray-50 border-b border-gray-200 text-gray-700 text-sm uppercase">
+      <th class="w-1/2 px-6 py-3 font-semibold">Nombre</th>
+      <th class="w-1/4 px-6 py-3 font-semibold text-center">Prioridad</th>
+      <th class="w-1/4 px-6 py-3 font-semibold text-center">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody class="divide-y divide-gray-100 text-gray-700">
+    <% @subjects.each do |subject| %>
+      <%= render 'subject', subject: subject %>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @subjects.empty? %>
+  <div class="p-6 text-center text-gray-500">
+    No hay temas cargados todavía.
+  </div>
+<% end %>

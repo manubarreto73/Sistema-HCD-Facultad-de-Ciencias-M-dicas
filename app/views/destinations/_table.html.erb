@@ -1,0 +1,21 @@
+<table class="w-full text-left border-collapse">
+  <thead>
+    <tr class="bg-gray-50 border-b border-gray-200 text-gray-700 text-sm uppercase">
+      <th class="w-1/2 px-6 py-3 font-semibold">Nombre</th>
+      <th class="w-1/4 px-6 py-3 font-semibold text-center">¿Es comisión?</th>
+      <th class="w-1/4 px-6 py-3 font-semibold text-center">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody id="destinations_index" class="divide-y divide-gray-100 text-gray-700">
+    <% @destinations.each do |destination| %>
+      <%= render 'destination', destination: destination %>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @destinations.empty? %>
+  <div class="p-6 text-center text-gray-500">
+    No hay destinos cargados todavía.
+  </div>
+<% end %>

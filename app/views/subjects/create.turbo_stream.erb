@@ -1,0 +1,5 @@
+<%= turbo_stream.update "subjects" do %>
+  <%= render "table", subjects: @subjects %>
+<% end %>
+
+<%= turbo_stream.update "modal", "" %>

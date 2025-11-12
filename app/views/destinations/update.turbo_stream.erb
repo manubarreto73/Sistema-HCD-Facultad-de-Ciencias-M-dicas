@@ -1,0 +1,2 @@
+<%= turbo_stream.update "destination_#{@destination.id}", partial: "destinations/updated_destination", locals: { destination: @destination } %>
+<%= turbo_stream.update "modal", "" %>

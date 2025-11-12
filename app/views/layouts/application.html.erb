@@ -21,15 +21,15 @@
     <%= stylesheet_link_tag :app %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= turbo_include_tags %>
   </head>
 
-  <body class="bg-gray-400">
+  <body class="bg-gray-300">
     <% if user_signed_in? %>
-    <%= render 'shared/header' %>
+      <%= render 'shared/header' %>
     <% end %>
-    
-    <div class="<%= 'pt-16 px-4' if user_signed_in? %> ">
-      <%= yield %>   
+    <div class="<%= 'pt-12' if user_signed_in? %> ">
+    <%= yield %>   
     </div>
   </body>
 </html>

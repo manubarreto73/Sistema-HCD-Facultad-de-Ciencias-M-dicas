@@ -1,0 +1,19 @@
+<%= form_with(model: destination, class: "space-y-4 animate-scale-in", data: { turbo_frame: "_top" }) do |f| %>
+  <div>
+    <%= f.label 'Nombre', class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :name, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500" %>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <%= f.check_box :is_commission, class: "h-4 w-4 text-gray-600 border-gray-300 rounded" %>
+    <%= f.label :is_commission, "¿Es comisión?", class: "text-sm text-gray-700" %>
+  </div>
+
+  <div class="flex justify-end space-x-2">
+    <%= f.submit (destination.new_record? ? "Crear destino" : "Actualizar destino"),
+      class: "bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition font-medium" %>
+
+    <%= link_to "Cancelar", "#", data: { action: "click->modal#close" },
+      class: "bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition font-medium" %>
+  </div>
+<% end %>
