@@ -15,5 +15,22 @@ Rails.application.routes.draw do
 
   resources :subjects
   resources :destinations
-  resources :expedients
+
+  resources :expedients do
+    member do
+      put :treat
+      put :delete_from_agenda
+    end
+  end
+
+  resources :daily_agendas do
+    member do
+      get :add_expedients # muestra el modal con la lista
+      post :attach_expedient # agrega uno
+      put :resolve
+    end
+    collection do
+      get :today
+    end
+  end
 end

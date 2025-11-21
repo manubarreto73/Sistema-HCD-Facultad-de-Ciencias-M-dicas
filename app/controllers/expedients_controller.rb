@@ -1,6 +1,7 @@
 class ExpedientsController < ApplicationController
-  before_action :set_expedient, only: %i[edit show update destroy]
+  before_action :set_expedient, only: %i[edit show update destroy treat delete_from_agenda]
   PER_PAGE = 3
+
   def index
     @tab = params[:tab] || 'no_tratados'
     @expedients =
@@ -70,6 +71,26 @@ class ExpedientsController < ApplicationController
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to expedients_path(page: @current_page), status: :see_other }
+    end
+  end
+
+  def treat
+    @expedient.treated!
+    flash.now[:notice] = "Expediente #{@expedient.file_number} marcado como tratado."
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { render :new }
+    end
+  end
+
+  def delete_from_agenda
+    @expedient.update(daily_agenda_id: nil)
+    flash.now[:notice] = "Expediente #{@expedient.file_number} eliminado de la orden del día."
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { render :new }
     end
   end
 

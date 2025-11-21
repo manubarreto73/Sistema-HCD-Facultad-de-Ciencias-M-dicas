@@ -1,0 +1,14 @@
+<%= render "shared/modal" do %>
+  <%= form_with(model: @daily_agenda, class: "bg-white rounded-xl shadow-lg p-8 flex flex-col items-center space-y-8", data: { turbo_frame: "_top" } )  do |f| %>
+    <div class="text-center w-full font-semibold">
+      <h2 class="text-xl font-semibold">Editar orden del día (ID: <%= @daily_agenda.id %>)</h2>
+    </div>
+    <div class="text-center w-full">
+      Fecha: <%= f.date_field :date %>
+    </div>
+    <div class="text-center flex justify-end space-x-2">
+      <%= close_modal_button %>
+      <%= f.submit 'Actualizar', class: "bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition font-medium" %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,42 @@
+<div class="index-container">
+  <div class="index-background">
+    <div class="index-title-container justify-between">
+      <div class="w-2/3">
+        <h2 class="text-2xl font-semibold text-gray-800">Orden del día <%=  @daily_agenda.date %> (ID <%= @daily_agenda.id %>)</h2>
+      </div>
+      <div data-controller="dropdown" class="relative inline-block text-left">
+        <button
+          data-action="click->dropdown#toggle"
+          class="flex items-center gap-2 px-3 py-1 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition"
+        >
+          Acciones
+
+          <!-- Icono flechita con rotación suave -->
+          <svg data-dropdown-target="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 transition-transform duration-200"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <div data-dropdown-target="menu" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 z-50 text-center hidden flex flex-col">
+          <%= link_to 'Agregar expedientes', add_expedients_daily_agenda_path(@daily_agenda), data: { turbo_frame: 'modal' }, class: 'hover:bg-gray-100 p-1' %>
+          <%= link_to 'Marcar como tratada', resolve_daily_agenda_path(@daily_agenda), data: { turbo_method: :put }, class: 'hover:bg-gray-100 p-1' %>
+        
+          <%= link_to 'Editar fecha', edit_daily_agenda_path(@daily_agenda), data: { turbo_frame: 'modal' }, class: 'hover:bg-gray-100 p-1' %>
+
+           <%= link_to 'Ver todas las ordenes', daily_agendas_path, class: 'hover:bg-gray-100 p-1' %>
+        </div>
+      </div>
+
+    </div>
+
+    <%= turbo_frame_tag "daily_agenda_expedients" do %>
+      <%= render "table", expedients: @daily_agenda.expedients, font_size: '' %>
+    <% end %>
+  </div>
+</div>
+
+<%= turbo_frame_tag "modal" %>

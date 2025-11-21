@@ -21,14 +21,14 @@ module ButtonHelper
     active = (tab == current_tab)
 
     classes = [
-      "px-4", "py-2",
-      "rounded-t-md",
-      "text-sm", "font-semibold", "text-gray-700",
-      "transition",
-      active ? "bg-gray-100" : "bg-gray-400 hover:bg-gray-300"
-    ].join(" ")
+      'px-4', 'py-2',
+      'rounded-t-md',
+      'text-sm', 'font-semibold', 'text-gray-700',
+      'transition',
+      active ? 'bg-gray-100' : 'bg-gray-400 hover:bg-gray-300'
+    ].join(' ')
 
-    link_to path, class: "group" do
+    link_to path, class: 'group' do
       content_tag(:div, text, class: classes)
     end
   end

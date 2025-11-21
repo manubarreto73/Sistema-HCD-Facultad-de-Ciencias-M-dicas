@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_15_190153) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_19_194042) do
+  create_table "daily_agendas", force: :cascade do |t|
+    t.date "date", default: "2025-11-19", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "destinations", force: :cascade do |t|
     t.string "name", null: false
     t.boolean "is_commission", default: false, null: false
@@ -31,6 +37,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_15_190153) do
     t.integer "subject_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "daily_agenda_id"
+    t.index ["daily_agenda_id"], name: "index_expedients_on_daily_agenda_id"
     t.index ["destination_id"], name: "index_expedients_on_destination_id"
     t.index ["subject_id"], name: "index_expedients_on_subject_id"
   end
@@ -57,6 +65,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_15_190153) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "expedients", "daily_agendas"
   add_foreign_key "expedients", "destinations"
   add_foreign_key "expedients", "subjects"
 end

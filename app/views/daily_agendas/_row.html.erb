@@ -1,0 +1,14 @@
+<tr class="hover:bg-indigo-50/50 transition cursor-pointer" 
+  data-expedients-form-target="item"
+  data-id="<%= expedient.id %>"
+  data-number="<%= expedient.file_number %>"
+  data-action="click->expedients-form#toggle">
+  <td class="w-1/12 px-4 py-2 whitespace-nowrap text-center">
+    <%= check_box_tag "expedient_ids[]", expedient.id, false, id: "expedient_#{expedient.id}", class: "form-checkbox h-4 w-4 text-indigo-600 rounded", data: { expedients_form_target: "checkbox" } %>
+  </td>
+  
+  <td class="w-5/12 px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900"> <%= expedient.file_number %> </td>
+  <td class="w-3/12 px-4 py-2 whitespace-nowrap text-sm text-gray-500"> <%= expedient.responsible %> </td>
+  <td class="w-3/12 px-4 py-2 whitespace-nowrap text-sm text-gray-500"> <%= expedient.destination.name %> </td>
+      
+</tr>

@@ -13,7 +13,7 @@
 }
 
 .index-background {
-  @apply bg-white w-full rounded-3xl shadow-lg overflow-hidden;
+  @apply bg-white w-full rounded-3xl shadow-lg;
 }
 
 .index-title-container {
@@ -22,4 +22,8 @@
 
 .modal-title {
   @apply text-xl font-semibold mb-4 text-gray-800;
+}
+
+.expedient-breadcrumb {
+  @apply inline-flex text-sm bg-indigo-100 px-1 rounded-sm mx-1 p-1;
 }

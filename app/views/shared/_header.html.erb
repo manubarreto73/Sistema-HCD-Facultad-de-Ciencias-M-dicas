@@ -4,22 +4,24 @@
     
     <div class="text-lg font-semibold">
       <%= link_to "HCD Facultad de Ciencias Médicas", root_path,
-            class: "transition", style: "color: white;" %>
+            class: "transition text-white" %>
     </div>
 
     <nav class="space-x-4 flex items-center">
+      <%= link_to 'Orden del día', today_daily_agendas_path,
+            class: "transition text-white" %>
 
       <%= link_to 'Expedientes', expedients_path,
-            class: "transition", style: "color: white;" %>
+            class: "transition text-white" %>
 
       <%= link_to 'Destinos', destinations_path,
-            class: "transition", style: "color: white;" %>
+            class: "transition text-white" %>
 
       <%= link_to 'Temas', subjects_path,
-            class: "transition", style: "color: white;" %>
+            class: "transition text-white" %>
 
       <%= link_to "Inicio", root_path,
-            class: "transition", style: "color: white;" %>
+            class: "transition text-white" %>
 
       <%= link_to "Cerrar sesión", destroy_user_session_path,
             data: { turbo_method: :delete },

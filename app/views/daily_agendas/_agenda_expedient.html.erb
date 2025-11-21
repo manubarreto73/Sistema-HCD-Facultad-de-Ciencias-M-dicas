@@ -1,0 +1,23 @@
+<tr id="agenda_expedient_<%= expedient.id %>" class="hover:bg-gray-50 transition <%= font_size %>"> 
+  <td class="px-6 py-4 font-medium"><%= expedient.file_number %></td>
+  <td class="text-center"><%= expedient.subject.name %></td>
+  <td class="text-center"><%= expedient.destination.name %></td>
+  <td class="text-center"><%= expedient.responsible %></td>
+  <td class="text-center"><%= expedient.status %></td>
+  <td class="px-6 py-4 text-center space-x-2">
+    <%= link_to "Ver",
+      expedient_path(expedient),
+      data: { turbo_frame: "modal" },
+      class: "text-blue-600 hover:underline" %>
+
+    <%= link_to "Tratar",
+      treat_expedient_path(expedient),
+      data: { turbo_method: :put },
+      class: "text-blue-600 hover:underline" %>
+    
+    <%= link_to "Eliminar",
+      delete_from_agenda_expedient_path(expedient),
+      data: { turbo_method: :put },
+      class: "text-blue-600 hover:underline" %>
+  </td>
+</tr>

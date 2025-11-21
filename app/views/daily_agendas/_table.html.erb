@@ -1,0 +1,23 @@
+<table class="w-full text-left border-collapse">
+  <thead>
+    <tr class="bg-gray-50 border-b border-gray-200 text-gray-700 text-sm uppercase">
+      <th class="px-6 py-3 font-semibold">Número</th>
+      <th class="px-6 py-3 font-semibold text-center">Tema</th>
+      <th class="px-6 py-3 font-semibold text-center">Destino</th>
+      <th class="px-6 py-3 font-semibold text-center">Responsable</th>
+      <th class="px-6 py-3 font-semibold text-center">Estado</th>
+      <th class="px-6 py-3 font-semibold text-center">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody class="divide-y divide-gray-100 text-gray-700">
+    <% @daily_agenda.expedients.each do |expedient| %>
+      <%= render "agenda_expedient", expedient: expedient, font_size: font_size %>
+    <% end %>
+    <% if @daily_agenda.expedients.empty? %>
+      <tr>
+        <td class="p-6 font-medium col-span-12">No hay expedientes agregados aún</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

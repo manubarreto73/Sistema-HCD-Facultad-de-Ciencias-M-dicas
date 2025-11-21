@@ -1,0 +1,18 @@
+<div class="flex-grow p-2">
+  <table class="table-auto w-full border border-gray-300 rounded">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="px-3 py-2 border">Número de expediente</th>
+        <th class="px-3 py-2 border">Responsable</th>
+        <th class="px-3 py-2 border">Tema</th>
+        <th class="px-3 py-2 border">Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% expedients.each do |expedient| %>
+        <%= render 'row', expedient: expedient %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
