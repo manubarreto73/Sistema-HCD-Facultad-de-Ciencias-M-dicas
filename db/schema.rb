@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema[8.0].define(version: 2025_11_19_194042) do
   create_table "daily_agendas", force: :cascade do |t|
-    t.date "date", default: "2025-11-19", null: false
+    t.date "date", default: "2025-11-29", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -33,8 +33,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_19_194042) do
     t.string "opinion"
     t.datetime "creation_date"
     t.integer "file_status", default: 0
-    t.integer "destination_id", null: false
-    t.integer "subject_id", null: false
+    t.datetime "treat_date"
+    t.integer "destination_id"
+    t.integer "subject_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "daily_agenda_id"

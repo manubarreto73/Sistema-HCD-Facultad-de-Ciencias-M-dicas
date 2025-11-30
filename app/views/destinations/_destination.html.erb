@@ -9,13 +9,6 @@
         class: "text-blue-600 hover:underline font-medium",
         data: { turbo_frame: "modal" } %>
 
-     <%= link_to "Eliminar",
-    # ¡CLAVE! Añadir el parámetro 'page' a la URL de eliminación.
-        destination,     
-        data: {
-          turbo_method: :delete,
-          turbo_confirm: "¿Seguro?"
-        },
-        class: "text-red-600 hover:underline font-medium" %>
+     <%= link_to 'Eliminar', modal_delete_destination_path(destination, page: params[:page]),  class: "text-red-600 hover:underline font-medium", data: { turbo_frame: 'modal'} %>
   </td>
 </tr>

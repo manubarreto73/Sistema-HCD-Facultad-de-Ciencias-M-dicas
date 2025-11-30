@@ -1,6 +1,8 @@
 <%= turbo_stream.update "expedients_table" do %>
-  
   <%= render "table", expedients: @expedients %>
+  <div class="p-10">
+        <%= render "shared/pagination_expedients", page: @page, total_pages: @total_pages %>
+      </div>
 <% end %>
 <%= turbo_stream.update "modal", "" %>
 <%= turbo_stream.update("flash-container", partial: "shared/flash") %>

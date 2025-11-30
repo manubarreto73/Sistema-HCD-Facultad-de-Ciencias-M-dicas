@@ -7,8 +7,9 @@ class CreateExpedients < ActiveRecord::Migration[8.0]
       t.string :opinion
       t.datetime :creation_date
       t.integer :file_status, default: 0
-      t.references :destination, null: false, foreign_key: true
-      t.references :subject, null: false, foreign_key: true
+      t.datetime :treat_date, null: true
+      t.references :destination, null: true, foreign_key: true
+      t.references :subject, null: true, foreign_key: true
       t.timestamps
     end
   end

@@ -1,8 +1,0 @@
-<%= turbo_stream.update "daily_agenda_expedients" do %>
-  <%= render "expedients_table", expedients: @daily_agenda.expedients %>
-<% end %>
-
-<%= turbo_stream.update "modal", "" %>
-
-<%= turbo_stream.update "flash_container", partial: "shared/flash" %>
-<% flash[:notice] = "Expediente agregado correctamente" %>

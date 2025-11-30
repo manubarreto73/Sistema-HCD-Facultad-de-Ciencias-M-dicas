@@ -1,23 +1,27 @@
 <%= render "shared/modal" do %>
-  <div class="bg-white rounded-xl shadow-lg p-8 w-4/5 h-2/3  flex flex-col"> <%# Contenedor padre Flex %>
+  <div class="bg-white rounded-xl shadow-lg p-8 w-4/5 h-2/3  flex flex-col"> 
     <div class=" mb-4">
-      <h2 class="modal-title">Agregar expedientes (ID: <%= @daily_agenda.id  %>)</h2>
+      <h2 class="modal-title">Agregar expedientes</h2>
     </div>
     
     <%= form_with(model: @daily_agenda, url: attach_expedient_daily_agenda_path(@daily_agenda), method: :post, data: { turbo_frame: "_top", controller: 'expedients-form' }, class: 'grow flex flex-col') do |form| %>
 
       <div class=" rounded-xl mb-4 grow h-0 overflow-y-auto"> 
         <table class="min-w-full divide-y divide-gray-200 border-gray-200">      
-          <thead class="bg-gray-200 sticky top-0 z-10"> <%# Sticky para fijar la cabecera al hacer scroll %>
+          <thead class="bg-gray-200 sticky top-0 z-10 bg-primary-color-static text-white"> <%# Sticky para fijar la cabecera al hacer scroll %>
             <tr>
               <th class="w-1/12"></th>
-              <th class="w-5/12 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Número de expediente</th>
-              <th class="w-3/12 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Responsable</th>
-              <th class="w-3/12 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Destino</th>
+              <th class="w-5/12 px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Número de expediente</th>
+              <th class="w-3/12 px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Responsable</th>
+              <th class="w-3/12 px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Destino</th>
             </tr>
           </thead>
       
           <tbody class="bg-white divide-y divide-gray-200 pb-10">
+            <% if @expedients.empty? %>
+              <td class="w-5/12 p-6 whitespace-nowrap  font-medium text-gray-500"> No hay expedientes para agregar </td>
+            </tr>
+            <% end %>
             <% @expedients.each do |expedient| %>
               <%= render 'row', expedient: expedient %>
             <% end %>

@@ -14,6 +14,17 @@ class DailyAgenda < ApplicationRecord
   end
 
   def treated?
+    return false unless expedients.any?
+
     expedients.all? { |exp| exp.file_status == 'treated' }
+  end
+
+  def self.next_daily_agenda
+    today_agendas = where(date: Date.today)
+    exists = today_agendas.any?
+    return create(date: Date.today) unless exists
+
+    not_treated = today_agendas.find { |d| !d.treated? }
+    not_treated || create(date: Date.today)
   end
 end

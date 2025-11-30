@@ -1,6 +1,6 @@
 <td class="px-6 py-4 font-medium"><%= expedient.file_number %></td>
-<td class="text-center"><%= expedient.subject.name %></td>
-<td class="text-center"><%= expedient.destination.name %></td>
+<td class="text-center"><%= expedient.subject&.name || 'Sin tema' %></td>
+<td class="text-center"><%= expedient.destination&.name || 'Sin destino' %></td>
 <td class="text-center"><%= expedient.responsible %></td>
 <td class="text-center"><%= expedient.status %></td>
 <td class="px-6 py-4 text-center space-x-2">

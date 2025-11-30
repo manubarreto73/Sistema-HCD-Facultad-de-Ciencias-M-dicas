@@ -24,32 +24,57 @@
         <% end %>
       </div>
     </div>
-   
-    <div class="grid grid-cols-7 gap-2 text-center font-semibold text-gray-600 mb-2">
-      <div>Lun</div>
-      <div>Mar</div>
-      <div>Mié</div>
-      <div>Jue</div>
-      <div>Vie</div>
-      <div>Sáb</div>
-      <div>Dom</div>
-    </div>
+  <div class="pb-2 px-1">
+    <% if @daily_agendas.empty? %>
+    <div class="w-full text-center font-light text-3xl p-10">No hubo ordenes del día este mes</div>
+    <% else %>
+    <% @daily_agendas.each do |date, agendas| %>
+    <div data-controller="dropdown" class="rounded-lg p-1">
+        
+        <!-- Cabecera (botón del dropdown) -->
+        <button 
+          data-action="click->dropdown#toggle"
+          class="w-full flex justify-between items-center px-4 py-3 bg-gray-100 hover:bg-gray-200 transition cursor-pointer rounded-lg ">
+          <span class="font-semibold text-gray-800">
+            <%= l(date) %>  
+          </span>
 
-    <div class="grid grid-cols-7 gap-4 p-2">
-      <% @days_agenda.each do |day| %>
-        <% if day.month == @month %>
-          <% if @daily_agendas[day] %>
-            <%= link_to @daily_agendas[day], class: 'bg-gray-100 border-gray-200 border font-light text-center rounded-xl p-2 hover:shadow-xl transition hover:scale-105', data: { turbo_frame: 'modal' } do %>
-                <%= @daily_agendas[day].date_name %>
+          <span class="text-sm text-gray-600">
+            (<%= agendas.size %> ordenes del día)
+          </span>
+
+          <svg data-dropdown-target="icon"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 transition-transform duration-200"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+
+        <!-- Contenido del dropdown -->
+        <div data-dropdown-target="menu" class="hidden px-4 py-3 bg-white rounded-2xl">
+          <% agendas.each do |agenda| %>
+            <div class=-b py-2">
+              <div class="font-medium text-gray-800">
+                Orden del día #<%= agenda.id %>
+              </div>
+
+              <div class="text-sm text-gray-600">
+                  Cantidad de expedientes: <%= agenda.expedients.count %>
+                </div>
+
+                <%= link_to "Ver", 
+                  daily_agenda_path(agenda), data: { turbo_frame: 'modal' },
+                  class: "text-blue-600 hover:underline text-sm" %>
+              </div>
             <% end %>
-          <% else %>
-            <div class="bg-gray-100 rounded-xl p-2 h-12 transition"></div>
-          <% end %>
-        <% else %>
-          <div class="rounded-xl p-2 h-12 bg-gray-200"></div>
-        <% end %>
+          </div>
+        </div>
+      <% end %>
       <% end %>
     </div>
+  </div>
   </div>
 </div>
 

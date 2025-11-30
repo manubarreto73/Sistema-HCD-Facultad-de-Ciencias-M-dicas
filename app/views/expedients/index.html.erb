@@ -5,8 +5,8 @@
       <%= new_modal_button('Nuevo expediente', new_expedient_path) %>
     </div>
     <%= render 'filter' %>
-    <div class="flex justify-between space-x-2 mt-2">
-      <div class="flex">
+    <div class="flex justify-between mt-2">
+      <div class="flex space-x-2">
         <%= tab_button(text: "No tratados", count: @no_treated_count, path: request.query_parameters.merge(treated: false)) %>
         <%= tab_button(text: "Tratados", count: @treated_count, path: request.query_parameters.merge(treated: true)) %>
       </div>
@@ -17,6 +17,9 @@
     </div>
     <%= turbo_frame_tag "expedients_table" do %>
       <%= render "table", expedients: @expedients %>
+      <div class="p-10">
+        <%= render "shared/pagination_expedients", page: @page, total_pages: @total_pages %>
+      </div>
     <% end %>
   </div>
 </div>

@@ -7,8 +7,8 @@
     </div>
 
     <nav class="space-x-4 flex items-center">
-      <%= header_button('Orden del día', today_daily_agendas_path) %>
-      <%= header_button('Expedientes', expedients_path) %>
+      <%= header_button('Orden del día', today_daily_agendas_path(treated: false)) %>
+      <%= header_button('Expedientes', expedients_path(treated: false)) %>
       <%= header_button('Destinos', destinations_path) %>
       <%= header_button('Temas', subjects_path) %>
       <%= link_to "Cerrar sesión", destroy_user_session_path,

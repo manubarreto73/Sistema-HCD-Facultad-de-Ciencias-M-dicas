@@ -10,10 +10,10 @@
   </thead>
 
   <tbody class="divide-y divide-gray-100 text-gray-700">
-    <% @daily_agenda.expedients.each do |expedient| %>
-      <%= render "agenda_expedient", expedient: expedient, font_size: font_size %>
+    <% @daily_agenda_expedients.each do |expedient| %>
+      <%= render "agenda_expedient", expedient: expedient %>
     <% end %>
-    <% if @daily_agenda.expedients.empty? %>
+    <% if @daily_agenda_expedients.empty? %>
       <tr>
         <td class="p-6 font-medium col-span-12">No hay expedientes agregados aún</td>
       </tr>

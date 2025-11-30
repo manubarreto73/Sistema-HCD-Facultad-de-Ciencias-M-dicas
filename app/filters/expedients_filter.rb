@@ -1,8 +1,8 @@
 class ExpedientsFilter
   attr_reader :scope, :params
 
-  def initialize(params)
-    @scope  = Expedient.includes(:destination, :subject).all
+  def initialize(scope, params)
+    @scope  = scope
     @params = params
     puts 'PARAMS'
     puts @params

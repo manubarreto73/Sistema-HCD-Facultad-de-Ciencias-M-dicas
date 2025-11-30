@@ -5,4 +5,13 @@ class Destination < ApplicationRecord
 
   scope :active_first, -> { order(active: :desc) }
   scope :actives, -> { where(active: true) }
+
+  has_many :expedients, dependent: :nullify
+
+
+  def logic_delete
+    expedients.update_all(destination_id: nil)
+    update(active: false)
+    update(name: "#{name}* [DELETED]")
+  end
 end

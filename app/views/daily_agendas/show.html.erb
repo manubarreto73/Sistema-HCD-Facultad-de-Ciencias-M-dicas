@@ -1,16 +1,30 @@
 <%= render "shared/modal" do %>
-  <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl animate-scale-in ">
-    <div class="text-center text-xl font-semibold mb-10 w-full"> Orden del día <%= @daily_agenda.date %></div>
-    <% if @daily_agenda.expedients.empty? %>
-      <div>
-        <td class="p-6 font-medium col-span-12">No hay expedientes agregados aún</td>
-      </div>
-    <% else %>
-      <%= render "table", expedients: @daily_agenda.expedients, font_size:'text-sm' %>
-    <% end %>
-  
+  <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-4xl max-h-[60vh] overflow-y-auto">
+    <div class="text-center text-xl font-semibold mb-10 w-full"> Orden del día <%= @daily_agenda.date %> #<%= @daily_agenda.id  %></div>
+    
+    <table class="border w-full p-2 rounded-2xl border-gray-200">
+      <thead>
+        <tr class="bg-gray-50 border-b border-gray-200 text-gray-700 text-sm uppercase">
+          <th class="px-6 py-3 font-semibold">Número</th>
+          <th class="px-6 py-3 font-semibold text-center">Tema</th>
+          <th class="px-6 py-3 font-semibold text-center">Destino</th>
+          <th class="px-6 py-3 font-semibold text-center">Responsable</th>
+        </tr>
+      <thead>
+
+    <tbody class="text-sm text-center text-gray-700 divide-y-2 divide-gray-400 gap-8">
+      <% @daily_agenda.expedients.each do |exp| %>
+          <td><%= exp.file_number %></td>
+          <td><%= exp.subject&.name || 'Sin tema' %></td>
+          <td><%= exp.destination&.name || 'Sin destino' %></td>
+          <td><%= exp.responsible %></td>
+        </tr>
+      <% end %>
+    </tbody>
+      
+    </table>
     <div class="flex justify-end m-2">
-      <%= close_modal_button %>
+      <%= close_modal_custom_title('Cerrar') %>
     </div>
   </div>
 <% end %>

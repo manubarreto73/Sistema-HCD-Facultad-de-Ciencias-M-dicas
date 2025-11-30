@@ -1,0 +1,15 @@
+<%= render 'shared/modal' do %>
+   <div class="modal-container animate-scale-in space-y-2">
+    <h2 class="modal-title">¿Marcar orden del día como tratada?</h2>
+    <div class="p-4 text-lg text-gray-600">
+      Los siguientes expedientes pasarán como tratados:
+    </div>
+    <% @daily_agenda.expedients.no_treated.each do |exp| %>
+      <div><%= exp.file_number %></div>
+    <% end %>
+    <div class="flex justify-end gap-4 p-2">
+      <%= close_modal_button %>  
+      <%= link_to 'Confirmar', resolve_daily_agenda_path(@daily_agenda), data: { turbo_method: :put }, class: 'bg-primary-color font-semibold px-6 py-2 rounded-lg text-white transtition duration-200' %>
+    </div>
+  </div>
+<% end %>

@@ -1,8 +1,11 @@
 class DestinationsController < ApplicationController
-  before_action :set_destination, only: %i[edit update destroy]
+  before_action :set_destination, only: %i[edit update destroy modal_delete]
 
   def index
-    @destinations = Destination.actives
+    paginator = Paginator.new(Destination.actives.order(:name), page: params[:page])
+    @destinations = paginator.paginated
+    @page = paginator.page
+    @total_pages = paginator.total_pages
   end
 
   def new
@@ -18,7 +21,10 @@ class DestinationsController < ApplicationController
     @destination = Destination.new(destination_params)
 
     if @destination.save
-      @destinations = Destination.actives
+      paginator = Paginator.new(Destination.actives.order(:name), page: params[:page])
+      @destinations = paginator.paginated
+      @page = paginator.page
+      @total_pages = paginator.total_pages
 
       respond_to do |format|
         flash[:notice] = 'Destino creado correctamente'
@@ -49,15 +55,32 @@ class DestinationsController < ApplicationController
   end
 
   def destroy
-    @destination.update(active: false)
+    @destination.logic_delete
 
-    @destinations = Destination.actives
-    flash.now[:info] = "Destino eliminado correctamente"
+    flash.now[:info] = 'Destino eliminado correctamente'
 
+    @page = params[:page].to_i
+    paginator = Paginator.new(Destination.actives.order(:name), page: @page)
+
+    @show_empty = Destination.actives.none?
+    @destinations = paginator.paginated
+    if @destinations.empty? && @page > 1
+      @page -= 1
+      paginator = Paginator.new(Destination.actives.order(:name), page: @page)
+      @destinations = paginator.paginated
+    end
+    @page = paginator.page
+    @total_pages = paginator.total_pages
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to destinations_path(page: @current_page), status: :see_other }
     end
+  end
+
+  def modal_delete
+    @expedients_count = @destination.expedients.count
+    @page = params[:page].to_i
+    render layout: false
   end
 
   private

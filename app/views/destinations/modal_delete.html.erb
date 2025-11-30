@@ -1,0 +1,17 @@
+<%= render "shared/modal" do %>
+  <div class="modal-container animate-scale-in space-y-4">
+    <h2 class="modal-title">Eliminar destino</h2>
+    <div>¿Estas seguro que querés eliminar el destino "<%= @destination.name %>"?</div>
+    <% if @expedients_count > 0 %>
+      <div class="text-sm">El destino tiene <%= @expedients_count %> expedientes asociados, quedarán sin destino.</div>
+    <% else %>
+    <div class="text-sm">
+      El destino no tiene expedientes asociados.
+    </div>
+    <% end %>
+    <div class="flex justify-end gap-4">
+      <%= close_modal_button %>
+      <%= delete_button(destination_path(@destination, page: @page)) %>
+    </div>
+  </div>
+<% end %>

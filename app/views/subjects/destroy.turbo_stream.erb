@@ -1,8 +1,12 @@
 <%= turbo_stream.remove @subject %>
-<%= turbo_stream.update "modal_frame", "" %>
+<%= turbo_stream.update "modal", "" %>
 <%= turbo_stream.update "subjects" do %>
   <%= render "table", subjects: @subjects %>
+  <div class="p-10">
+    <%= render "shared/pagination_subjects", page: @page, total_pages: @total_pages %>
+  </div>
 <% end %>
+
 <% if @show_empty %>
   <%= turbo_stream.append "subjects_index" do %>
     <tr>
@@ -10,5 +14,6 @@
     </tr>
   <% end %>
 <% end %>
+
 <%= turbo_stream.update("flash-container", partial: "shared/flash") %>
 <% flash.discard %>

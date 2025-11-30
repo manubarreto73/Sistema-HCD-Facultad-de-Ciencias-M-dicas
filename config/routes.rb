@@ -13,15 +13,25 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "daily_agendas#today"
 
-  resources :subjects
-  resources :destinations
+  resources :subjects do
+    member do
+      get :modal_delete
+    end
+  end
+  resources :destinations do
+    member do
+      get :modal_delete
+    end
+  end
 
   resources :expedients do
     member do
-      put :treat
+      put :treat_from_agenda
       put :delete_from_agenda
+      get :mark_as_treated_modal
+      get :modal_delete
     end
-    collection do 
+    collection do
       get :download_pdf
     end
   end
@@ -32,8 +42,11 @@ Rails.application.routes.draw do
       post :attach_expedient
       put :resolve
       get :download_pdf
+      put :mark_expedient_as_treated
+      get :mark_as_treated_modal
     end
     collection do
+      get :modal_list
       get :today
     end
   end

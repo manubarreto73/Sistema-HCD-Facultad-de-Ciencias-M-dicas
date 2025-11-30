@@ -1,0 +1,55 @@
+<% return if total_pages <= 1 %>
+
+<div class="flex items-center gap-2 justify-center mt-4">
+
+  <%# Botón anterior %>
+  <% if page > 1 %>
+    <%= link_to "<", subjects_path(page: page - 1), data: { turbo_frame: "subjects", turbo_action: 'advance' },
+      class: "px-3 py-1 border rounded hover:bg-gray-100" %>
+  <% else %>
+    <span class="px-3 py-1 border rounded opacity-40"><</span>
+  <% end %>
+
+  <%# Lógica de páginas comprimidas %>
+  <% visible_pages = [] %>
+
+  <% if total_pages <= 10 %>
+    <% visible_pages = (1..total_pages).to_a %>
+  <% else %>
+    <% visible_pages << 1 %>
+
+    <% if page > 4 %>
+     <%  visible_pages << "..." %>
+    <% end %>
+
+    <% start_page = [page - 2, 2].max %>
+    <% end_page   = [page + 2, total_pages - 1].min %>
+
+    <% visible_pages += (start_page..end_page).to_a %>
+
+    <% if page < total_pages - 3 %>
+     <% visible_pages << "..."  %> 
+    <% end %>
+
+    <% visible_pages << total_pages %>
+  <% end %>
+
+  <% visible_pages.each do |p| %>
+    <% if p == "..." %>
+      <span class="px-3 py-1">…</span>
+    <% elsif p == page %>
+      <span class="px-3 py-1 bg-gray-800 text-white rounded"><%= p %></span>
+    <% else %>
+      <%= link_to p, subjects_path(page: p), data: { turbo_frame: "subjects", turbo_action: 'advance' },
+        class: "px-3 py-1 border rounded hover:bg-gray-100" %>
+    <% end %>
+  <% end %>
+
+  <%# Botón siguiente %>
+  <% if page < total_pages %>
+    <%= link_to ">", subjects_path(page: page + 1), data: { turbo_frame: "subjects", turbo_action: 'advance' },
+      class: "px-3 py-1 border rounded hover:bg-gray-100" %>
+  <% else %>
+    <span class="px-3 py-1 border rounded opacity-40">></span>
+  <% end %>
+</div>

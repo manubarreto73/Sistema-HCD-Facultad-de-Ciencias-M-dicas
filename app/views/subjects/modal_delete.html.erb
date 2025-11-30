@@ -1,0 +1,17 @@
+<%= render "shared/modal" do %>
+  <div class="modal-container animate-scale-in space-y-4 ">
+    <h2 class="modal-title">Eliminar tema</h2>
+    <div>¿Estas seguro que querés eliminar el tema "<%= @subject.name %>"?</div>
+    <% if @expedients_count > 0 %>
+      <div class="text-sm">El tema tiene <%= @subject.expedients.count %> expedientes asociados, quedarán sin tema.</div>
+    <% else %>
+    <div class="text-sm">
+      El tema no tiene expediente/s asociado/s.
+    </div>
+    <% end %>
+    <div class="flex justify-end gap-4">
+      <%= close_modal_button %>
+      <%= delete_button(subject_path(@subject, page: @page)) %>
+    </div>
+  </div>
+<% end %>

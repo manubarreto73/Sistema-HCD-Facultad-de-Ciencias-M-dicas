@@ -1,7 +1,6 @@
-<div class="index-container">
-  <div class="index-background">
-    <%= turbo_frame_tag 'today_daily_agenda_header' do %>
-    <div class="index-title-container justify-between">
+<%= turbo_stream.update "modal", "" %>
+<%= turbo_stream.update "today_daily_agenda_header" do %>
+ <div class="index-title-container justify-between">
       <div class="w-2/3">
         <h2 class="text-2xl font-semibold text-gray-800">Orden del día <%= @daily_agenda.id %> <%=  @daily_agenda.date %> <%= "(#{@daily_count})" if @daily_count > 1 %></h2>
       </div>
@@ -26,26 +25,17 @@
           <%= link_to 'Agregar expedientes', add_expedients_daily_agenda_path(@daily_agenda), data: { turbo_frame: 'modal' }, class: 'hover:bg-gray-100 p-1' %>
           <%= link_to 'Marcar como tratada', mark_as_treated_modal_daily_agenda_path(@daily_agenda), data: { turbo_frame: 'modal' }, class: 'hover:bg-gray-100 p-1' %>
           <%= link_to 'Editar fecha', edit_daily_agenda_path(@daily_agenda), data: { turbo_frame: 'modal' }, class: 'hover:bg-gray-100 p-1' %>
-          <%= link_to 'Ver ordenes tratadas', daily_agendas_path, class: 'hover:bg-gray-100 p-1', data: { turbo: false } %>
+          <%= link_to 'Ver ordenes tratadas', daily_agendas_path, class: 'hover:bg-gray-100 p-1' %>
           <%= link_to 'Descargar orden del día', download_pdf_daily_agenda_path(@daily_agenda, format: :pdf), class: 'hover:bg-gray-100 p-1' %>
         </div>
       </div>
     </div>
-    <% end %>
-    <%= render 'filter' %>
-     
-    <div class="flex space-x-2 mt-2">
-      <%= tab_button_agenda(text: "No tratados", count: @no_treated_count, path: request.query_parameters.merge(treated: false)) %>
-      <%= tab_button_agenda(text: "Tratados", count: @treated_count, path: request.query_parameters.merge(treated: true)) %>
-    </div>
-
-    <%= turbo_frame_tag "daily_agenda_expedients" do %>
-      <%= render "table", expedients: @daily_agenda_expedients %>
-      <div class="p-10">
-        <%= render "shared/pagination_daily_agenda", page: @page, total_pages: @total_pages %>
-      </div>
-    <% end %>
+<% end %>
+<%= turbo_stream.update "daily_agenda_expedients" do %>
+  <%= render "table", expedients: @daily_agenda_expedients %>
+  <div class="p-10">
+    <%= render "shared/pagination_daily_agenda", page: @page, total_pages: @total_pages %>
   </div>
-</div>
-
-<%= turbo_frame_tag "modal" %>
+<% end %>
+<%= turbo_stream.update("flash-container", partial: "shared/flash") %>
+<% flash.discard %>

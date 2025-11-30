@@ -1,22 +1,22 @@
-<tr id="agenda_expedient_<%= expedient.id %>" class="hover:bg-gray-50 transition <%= font_size %>"> 
+<tr id="agenda_expedient_<%= expedient.id %>" class="hover:bg-gray-50 transition"> 
   <td class="px-6 py-4 font-medium"><%= expedient.file_number %></td>
-  <td class="text-center"><%= expedient.subject.name %></td>
-  <td class="text-center"><%= expedient.destination.name %></td>
+  <td class="text-center"><%= expedient.subject&.name || 'Sin tema' %></td>
+  <td class="text-center"><%= expedient.destination&.name || 'Sin destino' %></td>
   <td class="text-center"><%= expedient.responsible %></td>
   <td class="px-6 py-4 text-center space-x-2">
     <%= link_to "Ver",
       expedient_path(expedient),
       data: { turbo_frame: "modal" },
-      class: "text-blue-600 hover:underline" %>
-
+      class: "text-blue-600 hover:underline text-gray-600" %>
+    <% unless expedient.treated? %>
     <%= link_to "Tratar",
-      treat_expedient_path(expedient),
-      data: { turbo_method: :put },
-      class: "text-blue-600 hover:underline" %>
-    
-    <%= link_to "Eliminar",
+      mark_as_treated_modal_expedient_path(expedient),
+      data: { turbo_frame: 'modal' },
+      class: "text-blue-600 hover:underline text-gray-600" %>
+    <% end %>
+    <%= link_to "Quitar",
       delete_from_agenda_expedient_path(expedient),
       data: { turbo_method: :put },
-      class: "text-blue-600 hover:underline" %>
+      class: "text-blue-600 hover:underline text-gray-600" %>
   </td>
 </tr>

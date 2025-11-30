@@ -1,0 +1,11 @@
+<%= render "shared/modal", data: { turbo_frame: '_top' } do %>
+  <div class="modal-container animate-scale-in space-y-4 ">
+    <h2 class="modal-title">Eliminar expediente</h2>
+    <div>¿Estas seguro que querés eliminar el expediente "<%= @expedient.file_number %>"?</div>
+    <div><%= @page %></div>
+    <div class="flex justify-end gap-4">
+      <%= close_modal_button %>
+      <%= delete_button(expedient_path(@expedient, page: @page)) %>
+    </div>
+  </div>
+<% end %>

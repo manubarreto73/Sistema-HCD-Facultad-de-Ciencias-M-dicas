@@ -1,0 +1,70 @@
+<%= form_with url: today_daily_agendas_path, method: :get, class: "grid grid-cols-5 gap-4 p-4 bg-white rounded-xl shadow-md" do |f| %>
+
+  <!-- Número de expediente -->
+  <div class="flex flex-col">
+    <%= f.label :file_number, "Número de expediente", class: "text-sm font-semibold text-gray-700 mb-1" %>
+    <%= f.text_field :file_number,
+          value: params[:file_number],
+          class: "w-full border border-gray-300 rounded-lg px-3 py-2
+                  focus:ring-2 focus:ring-teal-500 focus:border-teal-500
+                  transition" %>
+  </div>
+
+  <!-- Destino -->
+  <div class="flex flex-col">
+    <div class= "text-sm font-semibold text-gray-700 mb-1">Destino</div>
+
+    <div class="w-full border border-gray-300 rounded-lg px-3 py-2
+                  focus:ring-2 focus:ring-teal-500 focus:border-teal-500
+                  transition">Honorable Consejo Directivo</div>
+  </div>
+
+  <!-- Tema -->
+  <div class="flex flex-col">
+    <%= f.label :subject_id, "Tema", class: "text-sm font-semibold text-gray-700 mb-1" %>
+    <%= f.select :subject_id,
+          options_from_collection_for_select(Subject.all, :id, :name, params[:subject_id]),
+          include_blank: "Todos",
+          class: "w-full border border-gray-300 rounded-lg px-3 py-2
+                  focus:ring-2 focus:ring-teal-500 focus:border-teal-500
+                  transition" %>
+  </div>
+
+  <!-- Fecha inicio -->
+  <div class="flex flex-col">
+    <%= f.label :from_date, "Desde", class: "text-sm font-semibold text-gray-700 mb-1" %>
+    <%= f.date_field :from_date,
+          value: params[:from_date],
+          class: "w-full border border-gray-300 rounded-lg px-3 py-2
+                  focus:ring-2 focus:ring-teal-500 focus:border-teal-500
+                  transition" %>
+  </div>
+
+  <!-- Hidden treated -->
+  <%= hidden_field_tag :treated, params[:treated] %>
+
+  <!-- Fecha fin -->
+  <div class="flex flex-col">
+    <%= f.label :to_date, "Hasta", class: "text-sm font-semibold text-gray-700 mb-1" %>
+    <%= f.date_field :to_date,
+          value: params[:to_date],
+          class: "w-full border border-gray-300 rounded-lg px-3 py-2
+                  focus:ring-2 focus:ring-teal-500 focus:border-teal-500
+                  transition" %>
+  </div>
+
+  <!-- Botón buscar -->
+  <div class="col-span-5 flex justify-end gap-2 mt-2">
+
+    <%= f.submit "Buscar",
+          class: "bg-teal-600 text-white font-semibold px-6 py-2 rounded-lg
+                  hover:bg-teal-700 transition shadow-sm" %>
+
+    <!-- Botón limpiar filtros -->
+    <%= link_to "Limpiar filtros",
+          today_daily_agendas_path(treated: params[:treated]),
+          class: "bg-gray-200 text-gray-700 font-semibold px-6 py-2 rounded-lg
+                  hover:bg-gray-300 transition" %>
+  </div>
+
+<% end %>

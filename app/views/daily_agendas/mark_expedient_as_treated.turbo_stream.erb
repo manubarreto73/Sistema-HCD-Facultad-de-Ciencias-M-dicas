@@ -1,0 +1,19 @@
+
+<%= turbo_stream.update "modal", "" %>
+
+<%= turbo_stream.update "daily_agenda_expedients" do %>
+  <%= render "table", expedients: @daily_agenda_expedients %>
+  <div class="p-10">
+    <%= render "shared/pagination_daily_agenda", page: @page, total_pages: @total_pages %>
+  </div>
+<% end %>
+
+
+<%= turbo_stream.update("flash-container", partial: "shared/flash") %>
+<% flash.discard %>
+
+<div hidden data-controller="counter" data-counter-treated-value="<%= @treated_count %>" data-counter-not-treated-value="<%= @no_treated_count %>"></div>
+
+
+
+

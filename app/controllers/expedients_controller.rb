@@ -1,16 +1,19 @@
 class ExpedientsController < ApplicationController
-  before_action :set_expedient, only: %i[edit show update destroy treat delete_from_agenda]
-  PER_PAGE = 3
+  before_action :set_expedient, only: %i[edit show update destroy treat_from_agenda delete_from_agenda mark_as_treated_modal modal_delete]
 
   def index
     index_params = filter_params
-    @expedients = ExpedientsFilter.new(index_params).call
+    @expedients = ExpedientsFilter.new(Expedient.includes(:destination, :subject).all, index_params).call
 
     @treated_count = @expedients.treated.count
     @no_treated_count = @expedients.no_treated.count
 
     @expedients =
-      params[:treated].to_s == 'true' ? @expedients.treated.order(sort_order) : @expedients.no_treated.order(sort_order)
+      params[:treated].to_s == 'true' ? @expedients.treated : @expedients.no_treated
+    paginator = Paginator.new(@expedients.order(sort_order), page: params[:page])
+    @expedients = paginator.paginated
+    @page = paginator.page
+    @total_pages = paginator.total_pages
   end
 
   def new
@@ -30,8 +33,10 @@ class ExpedientsController < ApplicationController
   def create
     @expedient = Expedient.new(expedient_params)
     if @expedient.save
-      @expedients = Expedient.all
-
+      paginator = Paginator.new(Expedient.order(:file_number), page: params[:page])
+      @expedients = paginator.paginated
+      @page = paginator.page
+      @total_pages = paginator.total_pages
       respond_to do |format|
         flash[:notice] = 'Expediente creado correctamente'
         format.turbo_stream
@@ -62,20 +67,50 @@ class ExpedientsController < ApplicationController
 
   def destroy
     @expedient.deleted!
-
-    @expedients = Expedient.all
+    @page = params[:page].to_i
+    @expedient = nil
     flash.now[:info] = "Expediente eliminado correctamente"
+    @expedients = ExpedientsFilter.new(Expedient.includes(:destination, :subject).all, filter_params).call
 
+    @treated_count = @expedients.treated.count
+    @no_treated_count = @expedients.no_treated.count
+
+    @expedients =
+      params[:treated].to_s == 'true' ? @expedients.treated : @expedients.no_treated
+    paginator = Paginator.new(@expedients.order(sort_order), page: @page)
+    @expedients = paginator.paginated
+    if @expedients.empty? && @page > 1
+      @page -= 1
+      paginator = Paginator.new(@expedients.order(sort_order), page: @page)
+      @expedients = paginator.paginated
+    end
+    @page = paginator.page
+    @total_pages = paginator.total_pages
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to expedients_path(page: @current_page), status: :see_other }
+      format.html { redirect_to expedients_path }
     end
   end
 
-  def treat
+  def treat_from_agenda
     @expedient.treated!
-    flash.now[:notice] = "Expediente #{@expedient.file_number} marcado como tratado."
+    @expedient.update(treat_date: Date.today)
 
+    flash.now[:notice] = "Expediente #{@expedient.file_number} marcado como tratado."
+    index_params = filter_params
+    @daily_agenda = @expedient.daily_agenda
+    @expedients = ExpedientsFilter.new(@daily_agenda.expedients.includes(:destination, :subject), index_params).call
+
+    @treated_count = @expedients.treated.count
+    @no_treated_count = @expedients.no_treated.count
+
+    @expedients =
+      params[:treated].to_s == 'true' ? @expedients.treated.order(sort_order) : @expedients.no_treated.order(sort_order)
+    paginator = Paginator.new(@expedients, page: params[:page])
+    @daily_agenda_expedients = paginator.paginated
+    @page = paginator.page
+    @total_pages = paginator.total_pages
+    puts "Expedientes despues del treat: #{@expedients}"
     respond_to do |format|
       format.turbo_stream
       format.html { render :new }
@@ -92,6 +127,11 @@ class ExpedientsController < ApplicationController
     end
   end
 
+  def modal_delete
+    @page = params[:page]
+    render layout: false
+  end
+
   def download_pdf
     treated = params[:treated] == 'true'
     @expedients = Expedient.where(treated: treated)
@@ -101,6 +141,10 @@ class ExpedientsController < ApplicationController
         render pdf: title, template: 'expedients/expedients_pdf'
       end
     end
+  end
+
+  def mark_as_treated_modal
+    render layout: false
   end
 
   private
@@ -117,7 +161,7 @@ class ExpedientsController < ApplicationController
   end
 
   def filter_params
-    params.permit(:file_number, :subject_id, :destination_id, :from_date, :to_date, :treated, :sort, :direction)
+    params.permit(:file_number, :subject_id, :destination_id, :from_date, :to_date, :treated, :sort, :direction, :page)
   end
 
   def sort_order

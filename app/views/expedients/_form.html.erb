@@ -10,20 +10,20 @@
         </div>
         <div class="flex gap-2 items-end">
           <div>
-            <%= f.text_field :dependency, maxlength: 4, class: "w-full border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500" %>
+            <%= f.number_field :dependency, maxlength: 4, class: "w-full border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500" %>
           </div>
           <span class="pb-2">-</span>
           <div>
-            <%= f.text_field :file_digits, maxlength: 8, class: "w-full border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500" %>
+            <%= f.number_field :file_digits, maxlength: 8, class: "w-full border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500" %>
           </div>
           <span class="pb-2">/</span>
           <div>
-            <%= f.text_field :file_year, maxlength: 4, class: "w-full border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500" %>
+            <%= f.number_field :file_year, maxlength: 4, class: "w-full border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500" %>
           </div>
           <span class="pb-2">-</span>
 
           <div>
-            <%= f.text_field :correspondence, maxlength: 3, class: "w-full border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500" %>
+            <%= f.number_field :correspondence, maxlength: 3, class: "w-full border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500" %>
           </div>
         </div>
         <% if expedient.errors[:file_number].any? %>

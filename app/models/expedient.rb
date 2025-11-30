@@ -1,11 +1,11 @@
 class Expedient < ApplicationRecord
-  belongs_to :subject
-  belongs_to :destination
+  belongs_to :subject, optional: true
+  belongs_to :destination, optional: true
   belongs_to :daily_agenda, optional: true
 
   validates :file_number, uniqueness: { message: 'El número de expediente ya existe' }
-  validates :file_number,  presence: { message: 'El número de expediente no puede estar vacío' }
-
+  validates :file_number, presence: { message: 'El número de expediente no puede estar vacío' } 
+  validates :file_number, length: { minimum: 19, message: 'El número de expediente es corto' }
   validates :responsible, length: { maximum: 50, message: 'El nombre del responsable es muy largo (máximo 30 carácteres)' }
   validates :opinion, length: { maximum: 200, message: 'El dictámen es muy largo (máximo 200 caracteres)' }
   validates :detail, length: { maximum: 200, message: 'El detalle es muy largo (máximo 200 carácteres)' }
@@ -59,5 +59,10 @@ class Expedient < ApplicationRecord
     return '' unless file_number
 
     file_number.split('-')[2]
+  end
+
+  def logic_delete
+    deleted!
+    update(subject: nil, destination: nil, daily_agenda: nil, file_number: "#{file_number}* [DELETED]")
   end
 end

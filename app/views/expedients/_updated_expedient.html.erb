@@ -1,8 +1,8 @@
-  <td class="px-6 py-4 font-medium"><%= expedient.file_number %></td>
-  <td class="text-center"><%= expedient.subject.name %></td>
-  <td class="text-center"><%= expedient.destination.name %></td>
-  <td class="text-center">3</td>
-  <td class="px-6 py-4 text-center space-x-2">
+<td class="px-6 py-4 font-medium bg-slate-400 transition"><%= expedient.file_number %></td>
+  <td class="text-center bg-slate-400 transition"><%= expedient.subject&.name || 'Sin tema' %></td>
+  <td class="text-center bg-slate-400 transition"><%= expedient.destination&.name || 'Sin destino' %></td>
+  <td class="text-center bg-slate-400 transition"><%= expedient.responsible %></td>
+  <td class="px-6 py-4 text-center space-x-2 bg-slate-400 transition">
     <%= link_to "Ver",
       expedient_path(expedient),
       data: { turbo_frame: "modal" },
@@ -13,7 +13,7 @@
         class: "text-blue-600 hover:underline font-medium",
         data: { turbo_frame: "modal" } %>
 
-     <%= link_to "Eliminar",
+    <%= link_to "Eliminar",
         expedient,     
         data: {
           turbo_method: :delete,
@@ -21,3 +21,5 @@
         },
         class: "text-red-600 hover:underline font-medium" %>
   </td>
+
+<div class="hidden" data-controller="row" data-row-row-value="expedient_<%= expedient.id %>"></div>

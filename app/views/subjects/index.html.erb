@@ -7,6 +7,9 @@
 
     <%= turbo_frame_tag "subjects" do %>
       <%= render "table", subjects: @subjects %>
+      <div class="p-10">
+        <%= render "shared/pagination_subjects", page: @page, total_pages: @total_pages %>
+      </div>
     <% end %>
   </div>
 </div>

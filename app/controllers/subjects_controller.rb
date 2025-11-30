@@ -1,8 +1,11 @@
 class SubjectsController < ApplicationController
-  before_action :set_subject, only: %i[edit update destroy]
+  before_action :set_subject, only: %i[edit update destroy modal_delete]
 
   def index
-    @subjects = Subject.all.order(:name)
+    paginator = Paginator.new(Subject.actives.order(:name), page: params[:page])
+    @subjects = paginator.paginated
+    @page = paginator.page
+    @total_pages = paginator.total_pages
   end
 
   def new
@@ -18,7 +21,10 @@ class SubjectsController < ApplicationController
     @subject = Subject.new(subject_params)
 
     if @subject.save
-      @subjects = Subject.all.order(:name)
+      paginator = Paginator.new(Subject.actives.order(:name), page: params[:page])
+      @subjects = paginator.paginated
+      @page = paginator.page
+      @total_pages = paginator.total_pages
       respond_to do |format|
         flash[:notice] = 'Tema creado correctamente'
         format.turbo_stream
@@ -48,15 +54,30 @@ class SubjectsController < ApplicationController
   end
 
   def destroy
-    @subject.destroy
+    @subject.logic_delete
     respond_to do |format|
-      @show_empty = Subject.none?
-      @subjects = Subject.all.order(:name)
+      @page = params[:page].to_i
+      paginator = Paginator.new(Subject.actives.order(:name), page: @page)
+      @show_empty = Subject.actives.none?
+      @subjects = paginator.paginated
+      if @subjects.empty? && @page > 1
+        @page -= 1
+        paginator = Paginator.new(Subject.actives.order(:name), page: @page)
+        @subjects = paginator.paginated
+      end
+      @page = paginator.page
+      @total_pages = paginator.total_pages
 
       flash[:info] = 'Tema eliminado correctamente'
       format.turbo_stream
       format.html { redirect_to subjects_path, notice: 'Tema eliminado con éxito.' }
     end
+  end
+
+  def modal_delete
+    @expedients_count = @subject.expedients.count
+    @page = params[:page].to_i
+    render layout: false
   end
 
   private

@@ -1,8 +1,6 @@
-<td class="px-6 py-4 font-medium"><%= destination.name %></td>
-  <td class="px-6 py-4 text-center font-medium">
-    <%= destination.is_commission ? 'Si' : 'No' %> 
-  </td>
-  <td class="px-6 py-4 text-center space-x-2">
+<td class="px-6 py-4 font-medium bg-slate-400 transition"><%= destination.name %></td>
+  <td class="px-6 py-4 text-center font-medium bg-slate-400 transition">  <%= destination.is_commission ? 'Si' : 'No' %>  </td>
+  <td class="px-6 py-4 text-center space-x-2 bg-slate-400 transition">
     <%= link_to "Editar",
         edit_destination_path(destination),
         class: "text-blue-600 hover:underline font-medium",
@@ -16,3 +14,4 @@
           },
           class: "text-red-600 hover:underline font-medium" %>
   </td>
+<div class="hidden" data-controller="row" data-row-row-value="destination_<%= destination.id %>"></div>

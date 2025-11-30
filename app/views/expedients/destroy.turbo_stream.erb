@@ -1,8 +1,17 @@
+<%= turbo_stream.remove @expedient %>
 <%= turbo_stream.update "modal", "" %>
-
 <%= turbo_stream.update "expedients_table" do %>
   <%= render "table", expedients: @expedients %>
+  <div class="p-10">
+    <%= render "shared/pagination_expedients", page: @page, total_pages: @total_pages %>
+  </div>
 <% end %>
-
+<% if @show_empty %>
+  <%= turbo_stream.append "expedients_table" do %>
+    <tr>
+      <td class=" p-6 font-medium">No hay expedientes cargados aún</td>
+    </tr>
+  <% end %>
+<% end %>
 <%= turbo_stream.update "flash-container", partial: "shared/flash" %>
 <% flash.discard %>
