@@ -16,7 +16,7 @@ def random_number_of_digits_exclusive(num_digits)
   # rand(min...max) es equivalente a rand(min..max-1)
   return rand(min_value...max_exclusive)
 end
-
+ExpedientHistory.delete_all
 Expedient.delete_all
 DailyAgenda.delete_all
 Subject.delete_all

@@ -1,5 +1,5 @@
 class ExpedientsController < ApplicationController
-  before_action :set_expedient, only: %i[edit show update destroy treat_from_agenda delete_from_agenda mark_as_treated_modal modal_delete]
+  before_action :set_expedient, only: %i[edit show update destroy treat_from_agenda delete_from_agenda mark_as_treated_modal modal_delete history]
 
   def index
     index_params = filter_params
@@ -33,6 +33,8 @@ class ExpedientsController < ApplicationController
   def create
     @expedient = Expedient.new(expedient_params)
     if @expedient.save
+      @expedient.create_history(current_user)
+
       paginator = Paginator.new(Expedient.order(:file_number), page: params[:page])
       @expedients = paginator.paginated
       @page = paginator.page
@@ -52,6 +54,7 @@ class ExpedientsController < ApplicationController
 
   def update
     if @expedient.update(expedient_params)
+      @expedient.modify_history(current_user)
       respond_to do |format|
         flash[:notice] = 'Expediente actualizado correctamente'
         format.turbo_stream
@@ -145,6 +148,10 @@ class ExpedientsController < ApplicationController
 
   def mark_as_treated_modal
     render layout: false
+  end
+
+  def history
+    puts 'hola?'
   end
 
   private

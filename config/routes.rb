@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       put :delete_from_agenda
       get :mark_as_treated_modal
       get :modal_delete
+      get :history
     end
     collection do
       get :download_pdf

@@ -1,4 +1,13 @@
-<h2 class="text-2xl font-semibold mb-6">Expediente Nº <%= expedient.file_number %></h2>
+<div class="flex justify-between">
+  <div>
+    <h2 class="text-2xl font-semibold mb-6">Expediente Nº <%= expedient.file_number %></h2>
+  </div>
+  <div>
+    <%= link_to history_expedient_path(expedient), data: { turbo: false } do %>
+    <h2 class="bg-primary rounded-lg px-2 font-semibold mb-6">Ver historial</h2>
+    <% end %>
+  </div>
+</div>
 
 <div class="grid grid-cols-2 gap-6">
 
